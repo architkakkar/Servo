@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     // sticky navbar feature to be added.
     <header className="">
-      <MaxWidthWrapper className="py-5 border-b-1.5 border-zinc-200">
+      <MaxWidthWrapper className="py-5">
         <nav className="grid grid-cols-navbar-mobile items-center gap-y-4 md:grid-cols-navbar-desktop md:gap-x-4 sticky backdrop-blur-lg">
           {/* Sidebar - goes here if required */}
           {/* Company Logo */}
