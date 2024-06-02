@@ -18,6 +18,13 @@ const config = {
       },
     },
     extend: {
+      borderWidth: {
+        '1.5': '1.5px',
+      },
+      gridTemplateColumns: {
+        'navbar-mobile': 'auto 1fr',
+        'navbar-desktop': 'auto 1fr auto auto',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
