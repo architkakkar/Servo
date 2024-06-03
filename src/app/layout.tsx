@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 import { Separator } from "@/components/ui/separator";
+import MainMenuButtons from "@/components/MainMenuButtons";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Navbar />
         <Separator />
         {children}
+        <MainMenuButtons />
       </body>
     </html>
   );
