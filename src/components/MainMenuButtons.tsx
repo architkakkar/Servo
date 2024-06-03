@@ -8,7 +8,7 @@ import { FaHeart, FaUser } from "react-icons/fa6";
 function MainMenuButtons() {
   return (
     <section className="bg-white/90 fixed bottom-0 w-full z-50 border-t-1.5 border-black rounded-t-xl md:hidden">
-      <ul className="grid grid-cols-4 items-center justify-center py-2.5">
+      <ul className="grid grid-cols-4 items-center justify-center py-3">
         <li>
           <Link
             href="/"
