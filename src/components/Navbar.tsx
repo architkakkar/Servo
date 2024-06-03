@@ -30,11 +30,11 @@ export default function Navbar() {
             />
           </div>
           {/* Location */}
-          <div className="flex items-center justify-end overflow-hidden cursor-pointer">
-            <div className="flex items-center gap-x-1 bg-zinc-200 px-2 py-1.5 md:py-3 rounded-xl overflow-hidden border-1.5 border-zinc-200">
+          <div className="flex items-center justify-end overflow-hidden">
+            <div className="flex items-center gap-x-1 bg-zinc-200 px-2 py-1.5 md:py-3 rounded-xl overflow-hidden border-1.5 border-zinc-200 cursor-pointer">
               <FaLocationDot className="min-w-5 min-h-5 -translate-y-[1px]" />
               <span className="text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis min-w-6">
-                Sri Ganganagar, Rajasthan
+                Sri Ganganagar
               </span>
               <FaChevronDown className="ml-2 min-w-4 min-h-4" />
             </div>
