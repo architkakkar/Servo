@@ -11,6 +11,7 @@ import { FaPlug, FaWrench } from "react-icons/fa6";
 import { TbIroningFilled } from "react-icons/tb";
 import { GiHandSaw, GiWateringCan } from "react-icons/gi";
 import { BiSolidCategory } from "react-icons/bi";
+import Card from "@/components/Card";
 
 const categories = [
   {
@@ -63,11 +64,53 @@ const bannerImages = [
   },
 ];
 
+const businessDetails = [
+  {
+    id: "DURGA01",
+    primaryImage:
+      "https://images.unsplash.com/photo-1716980197259-0777aaa6c094?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "Durga Wire and Electricals",
+    type: "Electrician",
+    rating: {
+      star: 4.9,
+      reviews: 103,
+    },
+    services: ["AC", "Refrigerator", "Washing Machine", "Microwave"],
+  },
+  {
+    id: "SNOWH02",
+    primaryImage:
+      "https://images.unsplash.com/photo-1716980197259-0777aaa6c094?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "Snowhite Dry Cleaners",
+    type: "Dry Cleaner",
+    rating: {
+      star: 4.5,
+      reviews: 57,
+    },
+    services: ["Shirts", "Suit", "Blanket", "Shoes", "Jeans"],
+  },
+];
+
 export default function Home() {
   return (
     <MaxWidthWrapper>
       <QuickCategoryNavbar />
       <HeroBanner />
+      <section className="mt-2 mb-6">
+        <p className="uppercase text-sm font-bold pb-4">Top rated near you</p>
+        <div className="grid grid-cols-2 gap-4">
+          {businessDetails.map((business) => (
+            <Card
+              key={business.id}
+              image={business.primaryImage}
+              title={business.title}
+              type={business.type}
+              stars={business.rating.star}
+              reviews={business.rating.reviews}
+            />
+          ))}
+        </div>
+      </section>
     </MaxWidthWrapper>
   );
 }
@@ -117,7 +160,6 @@ function HeroBanner() {
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="mt-20"></div>
     </section>
   );
 }
