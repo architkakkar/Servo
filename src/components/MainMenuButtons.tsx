@@ -23,8 +23,8 @@ function MainMenuButtons() {
             href="/account"
             className="flex flex-col items-center justify-center gap-y-1"
           >
-            <FaUser className="w-6 h-6" />
-            <span className="text-xs font-semibold">Account</span>
+            <FaUser className="w-5 h-5" />
+            <span className="text-xs font-semibold translate-y-[2px]">Account</span>
           </Link>
         </li>
         <li>
