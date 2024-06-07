@@ -74,7 +74,7 @@ export default function Account() {
       </div>
       {/*  */}
       <section className="mb-10">
-        <h2 className="uppercase text-sm font-bold pb-3">my account</h2>
+        <h2 className="uppercase text-sm font-bold pb-3">My Account</h2>
         <ul className="flex flex-col gap-y-4">
           {account.settings.map((setting) => (
             <li
