@@ -5,15 +5,16 @@ import { Luckiest_Guy } from "next/font/google";
 import { FaLocationDot, FaChevronDown } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { Separator } from "@/components/ui/separator";
 
 const luckiestGuy = Luckiest_Guy({ weight: "400", subsets: ["latin"] });
 
 export default function Navbar() {
   return (
     // sticky navbar feature to be added.
-    <header className="">
+    <header className="sticky inset-0 top-0 z-50 bg-white shadow-xl backdrop-blur-sm transition-all">
       <MaxWidthWrapper className="py-5">
-        <nav className="grid grid-cols-navbar-mobile items-center gap-y-4 md:grid-cols-navbar-desktop md:gap-x-4 sticky backdrop-blur-lg">
+        <nav className="grid grid-cols-navbar-mobile items-center gap-y-4 md:grid-cols-navbar-desktop md:gap-x-4">
           {/* Sidebar - goes here if required */}
           {/* Company Logo */}
           <div className={`${luckiestGuy.className} pr-4`}>
@@ -48,6 +49,7 @@ export default function Navbar() {
           </div>
         </nav>
       </MaxWidthWrapper>
+      <Separator />
     </header>
   );
 }

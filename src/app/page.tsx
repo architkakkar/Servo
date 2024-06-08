@@ -4,7 +4,6 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Card from "@/components/Card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Separator } from "@/components/ui/separator";
 import {
   Carousel,
   CarouselContent,
@@ -18,27 +17,27 @@ import { BiSolidCategory } from "react-icons/bi";
 
 const categories = [
   {
-    image: <FaPlug className="w-8 h-8" />,
+    image: <FaPlug className="w-8 h-8 md:w-12 md:h-12" />,
     title: "Electrician",
     slug: "electrician",
   },
   {
-    image: <FaWrench className="w-8 h-8" />,
+    image: <FaWrench className="w-8 h-8 md:w-12 md:h-12" />,
     title: "Plumber",
     slug: "plumber",
   },
   {
-    image: <GiHandSaw className="w-8 h-8" />,
+    image: <GiHandSaw className="w-8 h-8 md:w-12 md:h-12 outline-2" />,
     title: "Carpenter",
     slug: "carpenter",
   },
   {
-    image: <TbIroningFilled className="w-8 h-8" />,
+    image: <TbIroningFilled className="w-8 h-8 md:w-12 md:h-12" />,
     title: "Dry Cleaner",
     slug: "dry-cleaner",
   },
   {
-    image: <GiWateringCan className="w-8 h-8" />,
+    image: <GiWateringCan className="w-8 h-8 md:w-12 md:h-12" />,
     title: "Gardener",
     slug: "gardener",
   },
@@ -134,8 +133,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Separator />
-      <MaxWidthWrapper>
+      <MaxWidthWrapper className="">
         <QuickCategoryNavbar />
         <HeroBanner />
         <section className="mt-2 mb-6">
@@ -143,7 +141,7 @@ export default function Home() {
             Top rated near you
           </h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {businessDetails.map((business) => (
               <Card
                 key={business.id}
@@ -170,14 +168,16 @@ function QuickCategoryNavbar() {
       className="py-5 flex items-center gap-x-4 overflow-x-scroll"
     >
       {categories.map((category) => (
-        <div className="min-w-20 min-h-20 border-1.5 border-black rounded-full flex flex-col items-center justify-center gap-y-1 cursor-pointer shadow-md shadow-zinc-400">
+        <div className="min-w-20 min-h-20 md:w-28 md:h-28 border-1.5 border-black rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md shadow-zinc-400">
           {category.image}
-          <span className="text-[11px] font-semibold">{category.title}</span>
+          <span className="text-[11px] md:text-xs font-semibold">
+            {category.title}
+          </span>
         </div>
       ))}
-      <div className="min-w-20 min-h-20 border-1.5 border-black rounded-full flex flex-col items-center justify-center gap-y-1 cursor-pointer shadow-md shadow-zinc-400 text-white bg-black">
-        <BiSolidCategory className="w-8 h-8" />
-        <span className="text-[11px] font-semibold">Show More</span>
+      <div className="min-w-20 min-h-20 md:w-28 md:h-28 border-1.5 border-black rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md shadow-zinc-400 text-white bg-black">
+        <BiSolidCategory className="w-8 h-8 md:w-12 md:h-12" />
+        <span className="text-[11px] md:text-xs font-semibold">Show More</span>
       </div>
     </section>
   );
@@ -187,7 +187,7 @@ function HeroBanner() {
   return (
     <section className="my-5">
       <Carousel
-        className="w-full h-44"
+        className="w-full h-44 md:h-80"
         plugins={[
           Autoplay({
             delay: 3000,
@@ -201,7 +201,7 @@ function HeroBanner() {
                 <img
                   src={bannerImage.image}
                   alt=""
-                  className="rounded-3xl w-full h-44 border-2 border-black object-cover"
+                  className="rounded-3xl w-full h-44 md:h-80 border-2 border-black object-cover"
                 />
               </div>
             </CarouselItem>
