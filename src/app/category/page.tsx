@@ -1,6 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Navbar from "@/components/Navbar";
-import { Separator } from "@/components/ui/separator";
 import { FaPlug, FaWrench, FaChevronRight } from "react-icons/fa6";
 import { TbIroningFilled } from "react-icons/tb";
 import { GiHandSaw, GiWateringCan } from "react-icons/gi";
@@ -38,7 +37,6 @@ function Category() {
   return (
     <>
       <Navbar />
-      <Separator />
       <MaxWidthWrapper>
         <section className="my-5">
           <h2 className="uppercase text-sm font-bold pb-3">All Categories</h2>
