@@ -18,12 +18,16 @@ const config = {
       },
     },
     extend: {
+      fontSize: {
+        xxs: "0.6875rem",
+        xbase: "0.9375rem",
+      },
       borderWidth: {
         "1.5": "1.5px",
       },
       gridTemplateColumns: {
         "navbar-mobile": "auto 1fr",
-        "navbar-desktop": "auto 1fr auto auto",
+        "navbar-desktop": "auto 1fr auto auto auto",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -81,7 +85,8 @@ const config = {
       },
       boxShadow: {
         menuBtns: "0px 0px 15px #6b6b6b",
-        profile: "0px 0px 5px"
+        profile: "0px 0px 5px",
+        input: "0px 0px 2px #cfcfcf",
       },
     },
   },
