@@ -8,36 +8,45 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { FaPlug, FaWrench } from "react-icons/fa6";
 import { TbIroningFilled } from "react-icons/tb";
 import { GiHandSaw, GiWateringCan } from "react-icons/gi";
 import { BiSolidCategory } from "react-icons/bi";
+import Link from "next/link";
 
 const categories = [
   {
-    image: <FaPlug className="w-8 h-8 md:w-12 md:h-12" />,
+    image: <FaPlug className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />,
     title: "Electrician",
     slug: "electrician",
   },
   {
-    image: <FaWrench className="w-8 h-8 md:w-12 md:h-12" />,
+    image: <FaWrench className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />,
     title: "Plumber",
     slug: "plumber",
   },
   {
-    image: <GiHandSaw className="w-8 h-8 md:w-12 md:h-12 outline-2" />,
+    image: (
+      <GiHandSaw className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 outline-2" />
+    ),
     title: "Carpenter",
     slug: "carpenter",
   },
   {
-    image: <TbIroningFilled className="w-8 h-8 md:w-12 md:h-12" />,
+    image: (
+      <TbIroningFilled className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+    ),
     title: "Dry Cleaner",
     slug: "dry-cleaner",
   },
   {
-    image: <GiWateringCan className="w-8 h-8 md:w-12 md:h-12" />,
+    image: (
+      <GiWateringCan className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+    ),
     title: "Gardener",
     slug: "gardener",
   },
@@ -78,6 +87,7 @@ const businessDetails = [
       reviews: 103,
     },
     services: ["AC", "Refrigerator", "Washing Machine", "Microwave"],
+    price: 200,
   },
   {
     id: "SNOWH02",
@@ -90,6 +100,7 @@ const businessDetails = [
       reviews: 57,
     },
     services: ["Shirts", "Suit", "Blanket", "Shoes", "Jeans"],
+    price: 150,
   },
   {
     id: "SNOWH02",
@@ -102,6 +113,7 @@ const businessDetails = [
       reviews: 57,
     },
     services: ["Shirts", "Suit", "Blanket", "Shoes", "Jeans"],
+    price: 150,
   },
   {
     id: "SNOWH02",
@@ -114,6 +126,7 @@ const businessDetails = [
       reviews: 57,
     },
     services: ["Shirts", "Suit", "Blanket", "Shoes", "Jeans"],
+    price: 150,
   },
   {
     id: "SNOWH02",
@@ -126,6 +139,7 @@ const businessDetails = [
       reviews: 57,
     },
     services: ["Shirts", "Suit", "Blanket", "Shoes", "Jeans"],
+    price: 150,
   },
 ];
 
@@ -133,15 +147,15 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <MaxWidthWrapper className="">
+      <MaxWidthWrapper>
         <QuickCategoryNavbar />
         <HeroBanner />
-        <section className="mt-2 mb-6">
+        <section className="mt-2 md:mt-6 mb-6">
           <h2 className="uppercase text-sm font-extrabold pb-4">
             Top rated near you
           </h2>
 
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
             {businessDetails.map((business) => (
               <Card
                 key={business.id}
@@ -151,6 +165,8 @@ export default function Home() {
                 stars={business.rating.star}
                 reviews={business.rating.reviews}
                 services={business.services}
+                price={business.price}
+                isFavourite={false}
               />
             ))}
           </div>
@@ -163,31 +179,61 @@ export default function Home() {
 
 function QuickCategoryNavbar() {
   return (
-    <section
-      style={{ scrollbarWidth: "thin" }}
-      className="py-5 flex items-center gap-x-4 overflow-x-scroll"
-    >
-      {categories.map((category) => (
-        <div className="min-w-20 min-h-20 md:w-28 md:h-28 border-1.5 border-black rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md shadow-zinc-400">
-          {category.image}
-          <span className="text-[11px] md:text-xs font-semibold">
-            {category.title}
+    <>
+      {/* 
+      <section className="flex items-center justify-center">
+        <Carousel className="w-10/12">
+          <CarouselContent className="flex justify-evenly">
+            {categories.map((category) => (
+              <CarouselItem
+                key={category.title}
+                className="basis-1/3 xs:basis-1/4 sm:basis-1/5 md:basis-1/6"
+              >
+                <div className="min-w-20 min-h-20 md:w-28 md:h-28 border-2 rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md hover:border-black hover:bg-white/90 hover:shadow-lg my-5">
+                  {category.image}
+                  <span className="text-xxs md:text-xs font-semibold">
+                    {category.title}
+                  </span>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </section> 
+      */}
+      <section className="py-5 flex items-center gap-x-4 overflow-x-scroll scrollable-container">
+        {categories.map((category) => (
+          <Link
+            href="/"
+            className="min-w-20 min-h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 border-2 rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md hover:border-black hover:bg-white/90 hover:shadow-lg shrink-0"
+          >
+            {category.image}
+            <span className="text-xxs sm:text-xs font-semibold">
+              {category.title}
+            </span>
+          </Link>
+        ))}
+        <Link
+          href="/category"
+          className="min-w-20 min-h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 border-2 border-black rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md text-white bg-black hover:bg-black/90 shrink-0"
+        >
+          <BiSolidCategory className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+          <span className="text-xxs sm:text-xs font-semibold">
+            All Categories
           </span>
-        </div>
-      ))}
-      <div className="min-w-20 min-h-20 md:w-28 md:h-28 border-1.5 border-black rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md shadow-zinc-400 text-white bg-black">
-        <BiSolidCategory className="w-8 h-8 md:w-12 md:h-12" />
-        <span className="text-[11px] md:text-xs font-semibold">Show More</span>
-      </div>
-    </section>
+        </Link>
+      </section>
+    </>
   );
 }
 
 function HeroBanner() {
   return (
-    <section className="my-5">
+    <section className="my-5 lg:mt-0">
       <Carousel
-        className="w-full h-44 md:h-80"
+        className="w-full h-44 xs:h-52 sm:h-56 md:h-72 lg:h-96"
         plugins={[
           Autoplay({
             delay: 3000,
@@ -201,7 +247,7 @@ function HeroBanner() {
                 <img
                   src={bannerImage.image}
                   alt=""
-                  className="rounded-3xl w-full h-44 md:h-80 border-2 border-black object-cover"
+                  className="rounded-3xl w-full h-44 xs:h-52 sm:h-56 md:h-72 lg:h-96 border-2 border-black object-cover"
                 />
               </div>
             </CarouselItem>
