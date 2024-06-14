@@ -1,9 +1,15 @@
 import React from "react";
 import ServiceTag from "./ServiceTag";
-import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { FaStar } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import Link from "next/link";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 interface CardProps {
   title: string;
@@ -13,6 +19,7 @@ interface CardProps {
   reviews: number;
   services: string[];
   price: number;
+  isFavourite?: boolean;
 }
 
 function Card({
@@ -23,6 +30,7 @@ function Card({
   reviews,
   services,
   price,
+  isFavourite,
 }: CardProps) {
   const printServices = (services: string[]) => {
     const len = services.length;
@@ -37,7 +45,7 @@ function Card({
   };
 
   return (
-    <div className="w-full rounded-2xl border hover:border hover:border-zinc-400 hover:shadow-md cursor-pointer">
+    <div className="w-full rounded-2xl border hover:border hover:border-zinc-400 hover:shadow-lg cursor-pointer">
       {/* Special Tags */}
       <div className="hidden">
         <div className="flex item-center justify-center bg-black text-zinc-200 rounded-t-2xl py-0.5">
@@ -47,7 +55,7 @@ function Card({
         </div>
       </div>
       {/* Image, Type tag & Fav Icon  */}
-      <div className="h-32 bg-zinc-200 rounded-2xl relative shadow-md shadow-zinc-700">
+      <div className="h-32 xs:h-36 bg-zinc-200 rounded-2xl relative shadow-md shadow-zinc-700">
         <img
           src={image}
           alt="business-image"
@@ -55,11 +63,11 @@ function Card({
         />
         <ServiceTag businessType={type} />
         <div className="absolute top-2 right-2 cursor-pointer">
-          <IoHeartOutline className="h-6 w-6" />
+          <IoMdHeartEmpty className="h-6 w-6" />
         </div>
       </div>
-      {/* Busin ess Description */}
-      <div className="p-3 flex flex-col justify-between relative">
+      {/* Business Description */}
+      <div className="p-4 flex flex-col justify-between relative">
         <div className="overflow-hidden flex flex-col gap-y-1 grow h-full">
           {/* Business Name */}
           <h1 className="font-extrabold text-[15px] mb-0.5 leading-snug">
@@ -81,7 +89,9 @@ function Card({
             </p>
           </div>
           {/* Price */}
-          <div className="font-extrabold text-xl mt-0.5 mb-2 font-sans">{`Rs. ${price}/-`}</div>
+          <div
+            className={`${poppins.className} font-bold text-xl mt-1 mb-2.5`}
+          >{`Rs. ${price}/-`}</div>
           {/* Book Now Button */}
         </div>
         <Link href={"/"} className="flex-">
