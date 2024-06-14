@@ -12,10 +12,15 @@ import { FaUser } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const luckiestGuy = Luckiest_Guy({ weight: "400", subsets: ["latin"] });
 
-export default function Navbar() {
+interface NavbarProps {
+  className?: string;
+}
+
+export default function Navbar({ className }: NavbarProps) {
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -38,11 +43,16 @@ export default function Navbar() {
   }, [placeholders.length]);
 
   return (
-    <header className="sticky inset-0 top-0 z-50 text-black bg-white shadow-md shadow-zinc-200 transition-all rounded-b-md">
-      <MaxWidthWrapper className="py-5">
+    <MaxWidthWrapper
+      className={cn(
+        "py-5 sticky inset-0 top-0 z-50 text-black bg-white shadow-md shadow-zinc-200 transition-all rounded-b-md",
+        className
+      )}
+    >
+      <header>
         <nav className="grid grid-cols-navbar-mobile items-center gap-y-4 md:grid-cols-navbar-desktop md:gap-x-4">
           {/* Company Logo */}
-          <div className={`${luckiestGuy.className} pr-4`}>
+          <div className={`${luckiestGuy.className} pr-4 md:pr-2`}>
             <Link href={"/"} className="text-4xl">
               Servo
             </Link>
@@ -73,7 +83,7 @@ export default function Navbar() {
           {/* Location */}
           <div className="flex items-center justify-end overflow-hidden transition-all">
             <div
-              className={`flex items-center justify-between px-2 md:px-3 py-1.5 md:py-3 rounded-xl overflow-hidden border-2 cursor-pointer hover:border-black md:min-w-48 shadow-input ${
+              className={`flex items-center justify-between px-2 md:px-3 py-1.5 md:py-3 rounded-xl overflow-hidden border-2 cursor-pointer hover:border-black md:min-w-36 lg:min-w-48 shadow-input ${
                 showLocationDropdown && "z-[100]"
               }`}
               onClick={() => setShowLocationDropdown((prev) => !prev)}
@@ -100,21 +110,26 @@ export default function Navbar() {
             )}
           </div>
           {/* Account */}
-          <div className="hidden md:block cursor-pointer rounded-xl px-2 py-1 shadow-input border-2 hover:border-black">
+          <Link
+            href="/account"
+            className="hidden md:block cursor-pointer rounded-xl px-2 py-1 shadow-input border-2 hover:border-black"
+          >
             <div className="flex flex-col items-center justify-center gap-y-[2px]">
               <FaUser className="min-w-5 min-h-5" />
               <span className="text-xxs font-semibold">Account</span>
             </div>
-          </div>
+          </Link>
           {/* Cart */}
-          <div className="hidden md:block cursor-pointer rounded-xl px-2 py-1 shadow-input border-2 hover:border-black w-16">
+          <Link
+            href="/checkout" 
+            className="hidden md:block cursor-pointer rounded-xl px-2 py-1 shadow-input border-2 hover:border-black w-16">
             <div className="flex flex-col items-center justify-center gap-y-[2.5px]">
               <FaCartShopping className="min-w-5 min-h-5" />
               <span className="text-xxs font-semibold">Cart</span>
             </div>
-          </div>
+          </Link>
         </nav>
-      </MaxWidthWrapper>
-    </header>
+      </header>
+    </MaxWidthWrapper>
   );
 }
