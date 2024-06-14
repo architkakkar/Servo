@@ -39,8 +39,10 @@ function Category() {
       <Navbar />
       <MaxWidthWrapper>
         <section className="my-5">
-          <h2 className="uppercase text-sm font-bold pb-3">All Categories</h2>
-          <ul className="grid grid-cols-2 gap-4">
+          <h2 className="uppercase text-sm font-bold pb-3 lg:pt-2">
+            All Categories
+          </h2>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {categories.map((category) => (
               <li
                 key={category.title}
