@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { FaUserEdit, FaBoxOpen, FaHeart } from "react-icons/fa";
 import {
@@ -52,58 +53,68 @@ const account = {
 
 export default function Account() {
   return (
-    <MaxWidthWrapper className="my-5 pb-16">
-      {/* Customer Profile */}
-      <div className="px-6 py-3 flex items-center justify-start gap-x-8 rounded-2xl shadow-profile bg-[#ececec] mb-6">
-        <div className="border-1.5 border-black rounded-xl px-3 py-4 bg-[#EEEEEE]">
-          <p className="text-4xl uppercase font-extrabold">
-            {account.profile.initials}
-          </p>
-        </div>
-        <div className="">
-          <p className="font-bold text-xl">{account.profile.name}</p>
-          <p className="font-semibold text-sm">{`+91 ${account.profile.mobile}`}</p>
-          <Link
-            href={"/edit-profile"}
-            className="flex items-center font-medium hover:underline text-sm mt-1 gap-x-2 text-[#444444] hover:text-black"
-          >
-            <span>Edit Profile</span>
-            <FaUserEdit className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-      {/*  */}
-      <section className="mb-10">
-        <h2 className="uppercase text-sm font-bold pb-3">My Account</h2>
-        <ul className="flex flex-col gap-y-4">
-          {account.settings.map((setting) => (
-            <li
-              key={setting.title}
-              className="border-1.5 border-black rounded-lg hover:bg-zinc-200/80"
-            >
-              <Link
-                href={setting.link}
-                className="font-bold px-6 py-3 flex justify-between items-center"
-              >
-                <div className="flex gap-x-4 items-center">
-                  {setting.logo}
-                  <span>{setting.title}</span>
-                </div>
-                <FaCircleChevronRight className="w-5 h-5" />
-              </Link>
-            </li>
-          ))}
-          <li className="border-1.5 rounded-lg bg-red-100 text-red-600 border-red-600 cursor-pointer hover:bg-red-200/80">
-            <div className="font-bold flex justify-between items-center px-6 py-3">
-              <div className="flex gap-x-3 items-center">
-                <TbLogout className="w-6 h-6" />
-                <span>Log out</span>
-              </div>
-              <FaCircleChevronRight className="w-5 h-5" />
+    <>
+      <Navbar className="hidden md:block" />
+      <MaxWidthWrapper className="my-5 pb-16 md:pb-0">
+        {/* <div className="lg:flex"> */}
+        <section>
+          {/* Customer Profile */}
+          <div className="px-6 py-3 flex items-center justify-start gap-x-8 rounded-2xl shadow-profile bg-[#ececec] mb-6">
+            <div className="border-1.5 border-black rounded-xl px-3 py-4 bg-[#EEEEEE]">
+              <p className="text-4xl uppercase font-extrabold">
+                {account.profile.initials}
+              </p>
             </div>
-          </li>
-        </ul>
-      </section>
-    </MaxWidthWrapper>
+            <div className="">
+              <p className="font-bold text-xl">{account.profile.name}</p>
+              <p className="font-semibold text-sm">{`+91 ${account.profile.mobile}`}</p>
+              <Link
+                href={"/edit-profile"}
+                className="flex items-center font-medium hover:underline text-sm mt-1 gap-x-2 text-[#444444] hover:text-black"
+              >
+                <span>Edit Profile</span>
+                <FaUserEdit className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+          {/* All Account Options */}
+          <section className="mb-10">
+            <h2 className="uppercase text-sm font-extrabold pb-4">
+              My Account
+            </h2>
+            <ul className="flex flex-col gap-y-4">
+              {account.settings.map((setting) => (
+                <li
+                  key={setting.title}
+                  className="border-1.5 border-black rounded-lg hover:bg-zinc-200/90 hover:underline"
+                >
+                  <Link
+                    href={setting.link}
+                    className="font-bold px-6 py-3 flex justify-between items-center"
+                  >
+                    <div className="flex gap-x-4 items-center">
+                      {setting.logo}
+                      <span>{setting.title}</span>
+                    </div>
+                    <FaCircleChevronRight className="w-5 h-5" />
+                  </Link>
+                </li>
+              ))}
+              <li className="border-1.5 rounded-lg bg-red-100 text-red-600 border-red-600 cursor-pointer hover:bg-red-200/80 hover:underline">
+                <div className="font-bold flex justify-between items-center px-6 py-3">
+                  <div className="flex gap-x-3 items-center">
+                    <TbLogout className="w-6 h-6" />
+                    <span>Log out</span>
+                  </div>
+                  <FaCircleChevronRight className="w-5 h-5" />
+                </div>
+              </li>
+            </ul>
+          </section>
+        </section>
+        {/* <section className="hidden lg:block">all options content display here</section> */}
+        {/* </div> */}
+      </MaxWidthWrapper>
+    </>
   );
 }
