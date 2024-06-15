@@ -1,3 +1,5 @@
+"use client";
+
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
