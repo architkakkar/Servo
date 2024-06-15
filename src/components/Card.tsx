@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import ServiceTag from "./ServiceTag";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -12,9 +14,10 @@ const poppins = Poppins({
 });
 
 interface CardProps {
+  slug: string;
   title: string;
   image: string;
-  type: string;
+  type?: string;
   stars: number;
   reviews: number;
   services: string[];
@@ -23,6 +26,7 @@ interface CardProps {
 }
 
 function Card({
+  slug,
   title,
   image,
   type,
@@ -45,62 +49,65 @@ function Card({
   };
 
   return (
-    <div className="w-full rounded-2xl border hover:border hover:border-zinc-400 hover:shadow-lg cursor-pointer">
-      {/* Special Tags */}
-      <div className="hidden">
-        <div className="flex item-center justify-center bg-black text-zinc-200 rounded-t-2xl py-0.5">
-          <span className="font-bold text-[10px] uppercase tracking-wider">
-            NEW
-          </span>
+    <Link href={`/${slug}`}>
+      <div className="w-full rounded-2xl border hover:border hover:border-zinc-400 hover:shadow-lg cursor-pointer">
+        {/* Special Tags */}
+        <div className="hidden">
+          <div className="flex item-center justify-center bg-black text-zinc-200 rounded-t-2xl py-0.5">
+            <span className="font-bold text-[10px] uppercase tracking-wider">
+              NEW
+            </span>
+          </div>
         </div>
-      </div>
-      {/* Image, Type tag & Fav Icon  */}
-      <div className="h-32 xs:h-36 bg-zinc-200 rounded-2xl relative shadow-md shadow-zinc-700">
-        <img
-          src={image}
-          alt="business-image"
-          className="h-full w-full rounded-2xl"
-        />
-        <ServiceTag businessType={type} />
-        <div className="absolute top-2 right-2 cursor-pointer">
-          <IoMdHeartEmpty className="h-6 w-6" />
+        {/* Image, Type tag & Fav Icon  */}
+        <div className="h-32 xs:h-36 bg-zinc-200 rounded-2xl relative shadow-md shadow-zinc-400">
+          <img
+            src={image}
+            alt="business-image"
+            className="h-full w-full rounded-2xl object-cover"
+          />
+          {/* if type is passed then only show type tag */}
+          {type && <ServiceTag businessType={type} />}
+          <div className="absolute top-2 right-2 cursor-pointer">
+            <IoMdHeartEmpty className="h-6 w-6" />
+          </div>
         </div>
-      </div>
-      {/* Business Description */}
-      <div className="p-4 flex flex-col justify-between relative">
-        <div className="overflow-hidden flex flex-col gap-y-1 grow h-full">
-          {/* Business Name */}
-          <h1 className="font-extrabold text-[15px] mb-0.5 leading-snug">
-            {title}
-          </h1>
-          {/* Stars & Reviews */}
-          <div className="flex items-center justify-start text-xs font-semibold gap-x-1">
-            <div className="flex justify-center items-center bg-black text-zinc-200 px-1.5 py-0.5 rounded-md gap-x-1">
-              <FaStar className="w-4 h-4 -translate-y-[0.5px]" />
-              <span>{stars}</span>
+        {/* Business Description */}
+        <div className="p-4 flex flex-col justify-between relative">
+          <div className="overflow-hidden flex flex-col gap-y-1 grow h-full">
+            {/* Business Name */}
+            <h1 className="font-extrabold text-[15px] mb-0.5 leading-snug">
+              {title}
+            </h1>
+            {/* Stars & Reviews */}
+            <div className="flex items-center justify-start text-xs font-semibold gap-x-1">
+              <div className="flex justify-center items-center bg-black text-zinc-200 px-1.5 py-0.5 rounded-md gap-x-1">
+                <FaStar className="w-4 h-4 -translate-y-[0.5px]" />
+                <span>{stars}</span>
+              </div>
+              <GoDotFill className="w-3 h-3" />
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis">{`${reviews} Reviews`}</span>
             </div>
-            <GoDotFill className="w-3 h-3" />
-            <span className="whitespace-nowrap overflow-hidden text-ellipsis">{`${reviews} Reviews`}</span>
+            {/* Popular Services Offered */}
+            <div className="overflow-hidden">
+              <p className="whitespace-nowrap text-xs text-zinc-600 overflow-hidden text-ellipsis">
+                {printServices(services)}
+              </p>
+            </div>
+            {/* Price */}
+            <div
+              className={`${poppins.className} font-bold text-xl mt-1 mb-2.5`}
+            >{`Rs. ${price}/-`}</div>
           </div>
-          {/* Popular Services Offered */}
-          <div className="overflow-hidden">
-            <p className="whitespace-nowrap text-xs text-zinc-600 overflow-hidden text-ellipsis">
-              {printServices(services)}
-            </p>
-          </div>
-          {/* Price */}
-          <div
-            className={`${poppins.className} font-bold text-xl mt-1 mb-2.5`}
-          >{`Rs. ${price}/-`}</div>
           {/* Book Now Button */}
+          <Link href={"/"} className="">
+            <div className="bg-black text-zinc-200 font-bold capitialize rounded-lg w-full flex items-center justify-center text-sm hover:opacity-90">
+              <button className="text-center py-2">Book Now</button>
+            </div>
+          </Link>
         </div>
-        <Link href={"/"} className="flex-">
-          <div className="bg-black text-zinc-200 font-bold capitialize rounded-lg w-full flex items-center justify-center text-sm hover:opacity-90">
-            <button className="text-center py-2">Book Now</button>
-          </div>
-        </Link>
       </div>
-    </div>
+    </Link>
   );
 }
 
