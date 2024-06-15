@@ -103,7 +103,20 @@ const businessDetails = [
     price: 150,
   },
   {
-    id: "SNOWH02",
+    id: "SARAS03",
+    primaryImage:
+      "https://images.unsplash.com/photo-1716980197259-0777aaa6c094?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "Saraswati Plumbing",
+    type: "Plumber",
+    rating: {
+      star: 4.2,
+      reviews: 17,
+    },
+    services: ["Drainage", "Pipes", "Sinks", "Taps"],
+    price: 100,
+  },
+  {
+    id: "BELO12",
     primaryImage:
       "https://images.unsplash.com/photo-1716980197259-0777aaa6c094?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Snowhite Dry Cleaners",
@@ -116,20 +129,7 @@ const businessDetails = [
     price: 150,
   },
   {
-    id: "SNOWH02",
-    primaryImage:
-      "https://images.unsplash.com/photo-1716980197259-0777aaa6c094?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Snowhite Dry Cleaners",
-    type: "Dry Cleaner",
-    rating: {
-      star: 4.5,
-      reviews: 57,
-    },
-    services: ["Shirts", "Suit", "Blanket", "Shoes", "Jeans"],
-    price: 150,
-  },
-  {
-    id: "SNOWH02",
+    id: "YELP21",
     primaryImage:
       "https://images.unsplash.com/photo-1716980197259-0777aaa6c094?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Snowhite Dry Cleaners",
@@ -144,6 +144,15 @@ const businessDetails = [
 ];
 
 export default function Home() {
+  const generateURL = (type: string, name: string) => {
+    const partOne = type.toLowerCase().replaceAll(" ", "-");
+    const partTwo = name.toLowerCase().replaceAll(" ", "-");
+
+    const URL = `category/${partOne}/${partTwo}`;
+
+    return URL;
+  };
+
   return (
     <>
       <Navbar />
@@ -159,6 +168,7 @@ export default function Home() {
             {businessDetails.map((business) => (
               <Card
                 key={business.id}
+                slug={generateURL(business.type, business.title)}
                 image={business.primaryImage}
                 title={business.title}
                 type={business.type}
@@ -206,7 +216,8 @@ function QuickCategoryNavbar() {
       <section className="py-5 flex items-center gap-x-4 overflow-x-scroll scrollable-container">
         {categories.map((category) => (
           <Link
-            href="/"
+            key={category.title}
+            href={`/category/${category.slug}`}
             className="min-w-20 min-h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 border-2 rounded-full flex flex-col items-center justify-center gap-y-1 md:gap-y-3 cursor-pointer shadow-md hover:border-black hover:bg-white/90 hover:shadow-lg shrink-0"
           >
             {category.image}
