@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Luckiest_Guy } from "next/font/google";
 import MaxWidthWrapper from "./MaxWidthWrapper";
