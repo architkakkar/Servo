@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String        @unique
+  mobileNumber  String        @unique
+  photo         Bytes?
+  createdAt     DateTime      @default(now())
+  userAddresses UserAddress[]
+  bookings      Booking[]
+  reviews       Review[]
+  bookmarks     Bookmark[]
+  authToken     AuthToken[]
+}
+
+model UserAddress {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  addressLine1 String
+  addressLine2 String?   @default("")
+  city         String
+  country      String    @default("IN")
+  postcode     String
+  phoneNumber  String
+  user         User      @relation(fields: [userId], references: [id])
+  booking      Booking[]
+}
+
+model AuthToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      
+  token     String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([expiresAt])
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  vendorId  Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  vendor    Vendor   @relation(fields: [vendorId], references: [id])
+
+  @@unique([userId, vendorId])
+}
+
+model Category {
+  id      Int      @id @default(autoincrement())
+  name    String
+  vendors Vendor[]
+}
+
+model Vendor {
+  id              Int             @id @default(autoincrement())
+  name            String
+  rate            Float
+  categoryId      Int
+  category        Category        @relation(fields: [categoryId], references: [id])
+  vendorAddresses VendorAddress[]
+  vendorServices  VendorService[]
+  bookings        Booking[]
+  reviews         Review[]
+  bookmarks       Bookmark[]
+}
+
+model VendorAddress {
+  id           Int     @id @default(autoincrement())
+  vendorId     Int
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  country      String  @default("IN")
+  postcode     String
+  phoneNumber  String
+  vendor       Vendor  @relation(fields: [vendorId], references: [id])
+}
+
+model Service {
+  id             Int             @id @default(autoincrement())
+  name           String
+  vendorServices VendorService[]
+}
+
+model VendorService {
+  id        Int       @id @default(autoincrement())
+  vendorId  Int
+  serviceId Int
+  vendor    Vendor    @relation(fields: [vendorId], references: [id])
+  service   Service   @relation(fields: [serviceId], references: [id])
+  bookings  Booking[]
+  reviews   Review[]
+}
+
+model Booking {
+  id             Int             @id @default(autoincrement())
+  userId         Int
+  addressId      Int
+  vendorId       Int
+  totalAmount    Float
+  status         String
+  orderedAt      DateTime
+  user           User            @relation(fields: [userId], references: [id])
+  address        UserAddress     @relation(fields: [addressId], references: [id])
+  vendor         Vendor          @relation(fields: [vendorId], references: [id])
+  vendorServices VendorService[]
+  reviews        Review[]
+}
+
+model Review {
+  id              Int           @id @default(autoincrement())
+  userId          Int
+  vendorServiceId Int
+  rating          Int
+  comment         String?
+  ratedAt         DateTime
+  user            User          @relation(fields: [userId], references: [id])
+  vendorService   VendorService @relation(fields: [vendorServiceId], references: [id])
+  Vendor          Vendor?       @relation(fields: [vendorId], references: [id])
+  vendorId        Int?
+  Booking         Booking?      @relation(fields: [bookingId], references: [id])
+  bookingId       Int?
+}
