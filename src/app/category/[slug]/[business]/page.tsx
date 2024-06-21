@@ -55,7 +55,7 @@ export default function Business({ params }: BusinessTypeProps) {
         {/* Important Info */}
         <section className="mt-4 md:mt-6 flex flex-col md:flex-row md:gap-x-6 lg:gap-x-20 relative">
           {/* Images */}
-          <div className="md:w-1/2 lg:w-5/12">
+          <div className="md:w-1/2">
             {/* Primary Images */}
             <img
               src={business.primaryImage}
