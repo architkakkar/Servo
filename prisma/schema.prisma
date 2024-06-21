@@ -13,37 +13,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AccountRoleType {
+  CUSTOMER
+  ADMIN
+}
+
 model User {
-  id            Int           @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   firstName     String
   lastName      String
-  email         String        @unique
-  mobileNumber  String        @unique
-  photo         Bytes?
-  createdAt     DateTime      @default(now())
+  email         String          @unique
+  mobileNumber  String          @unique
+  imageUrl      String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  isActive      Boolean         @default(true)
+  role          AccountRoleType @default(CUSTOMER)
+  deletedAt     DateTime?
   userAddresses UserAddress[]
+  bookmarks     Bookmark[]
   bookings      Booking[]
   reviews       Review[]
-  bookmarks     Bookmark[]
   authToken     AuthToken[]
 }
 
 model UserAddress {
   id           Int       @id @default(autoincrement())
   userId       Int
+  addressLabel String
   addressLine1 String
   addressLine2 String?   @default("")
   city         String
   country      String    @default("IN")
   postcode     String
-  phoneNumber  String
+  mobileNumber String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   user         User      @relation(fields: [userId], references: [id])
   booking      Booking[]
+
+  @@index([userId])
 }
 
 model AuthToken {
   id        Int      @id @default(autoincrement())
-  userId    Int      
+  userId    Int
   token     String
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id])
@@ -69,72 +83,104 @@ model Category {
 }
 
 model Vendor {
-  id              Int             @id @default(autoincrement())
-  name            String
-  rate            Float
-  categoryId      Int
-  category        Category        @relation(fields: [categoryId], references: [id])
-  vendorAddresses VendorAddress[]
-  vendorServices  VendorService[]
-  bookings        Booking[]
-  reviews         Review[]
-  bookmarks       Bookmark[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  price         Float
+  categoryId    Int
+  mobileNumber  String
+  isAvailable   Boolean        @default(true)
+  email         String?
+  services      String[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  isActive      Boolean        @default(true)
+  deletedAt     DateTime?
+  category      Category       @relation(fields: [categoryId], references: [id])
+  vendorAddress VendorAddress?
+  vendorImages  VendorImage[]
+  bookings      Booking[]
+  reviews       Review[]
+  bookmarks     Bookmark[]
+
+  @@index([name, categoryId])
 }
 
 model VendorAddress {
-  id           Int     @id @default(autoincrement())
-  vendorId     Int
+  id           Int      @id @default(autoincrement())
+  vendorId     Int      @unique
   addressLine1 String
   addressLine2 String?
   city         String
-  country      String  @default("IN")
+  country      String   @default("IN")
   postcode     String
-  phoneNumber  String
-  vendor       Vendor  @relation(fields: [vendorId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  vendor       Vendor   @relation(fields: [vendorId], references: [id])
 }
 
-model Service {
-  id             Int             @id @default(autoincrement())
-  name           String
-  vendorServices VendorService[]
-}
-
-model VendorService {
-  id        Int       @id @default(autoincrement())
+model VendorImage {
+  id        Int     @id @default(autoincrement())
   vendorId  Int
-  serviceId Int
-  vendor    Vendor    @relation(fields: [vendorId], references: [id])
-  service   Service   @relation(fields: [serviceId], references: [id])
-  bookings  Booking[]
-  reviews   Review[]
+  vendor    Vendor  @relation(fields: [vendorId], references: [id])
+  imageUrl  String
+  isPrimary Boolean @default(false)
+
+  @@index([vendorId, isPrimary])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED_USER
+  CANCELLED_VENDOR
+  JUNK
 }
 
 model Booking {
-  id             Int             @id @default(autoincrement())
-  userId         Int
-  addressId      Int
-  vendorId       Int
-  totalAmount    Float
-  status         String
-  orderedAt      DateTime
-  user           User            @relation(fields: [userId], references: [id])
-  address        UserAddress     @relation(fields: [addressId], references: [id])
-  vendor         Vendor          @relation(fields: [vendorId], references: [id])
-  vendorServices VendorService[]
-  reviews        Review[]
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  addressId   Int
+  vendorId    Int
+  amount      Float
+  status      BookingStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  bookingDate DateTime?
+  message     String?
+  user        User          @relation(fields: [userId], references: [id])
+  address     UserAddress   @relation(fields: [addressId], references: [id])
+  vendor      Vendor        @relation(fields: [vendorId], references: [id])
+  reviews     Review[]
+  Payment     Payment[]
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model Payment {
+  id            Int           @id @default(autoincrement())
+  bookingId     Int
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String
+  transactionId String?       @unique
+  paymentDate   DateTime      @default(now())
+  booking       Booking       @relation(fields: [bookingId], references: [id])
 }
 
 model Review {
-  id              Int           @id @default(autoincrement())
-  userId          Int
-  vendorServiceId Int
-  rating          Int
-  comment         String?
-  ratedAt         DateTime
-  user            User          @relation(fields: [userId], references: [id])
-  vendorService   VendorService @relation(fields: [vendorServiceId], references: [id])
-  Vendor          Vendor?       @relation(fields: [vendorId], references: [id])
-  vendorId        Int?
-  Booking         Booking?      @relation(fields: [bookingId], references: [id])
-  bookingId       Int?
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  vendorId  Int?
+  bookingId Int?
+  rating    Float
+  comment   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  Vendor    Vendor?  @relation(fields: [vendorId], references: [id])
+  Booking   Booking? @relation(fields: [bookingId], references: [id])
 }
