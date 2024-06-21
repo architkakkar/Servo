@@ -303,7 +303,7 @@ export default function CategoryType({ params }: CategoryTypeProps) {
   return (
     <>
       <Navbar />
-      <MaxWidthWrapper className="py-5">
+      <MaxWidthWrapper className="pt-5 pb-12">
         <Link
           href="../"
           className="flex gap-x-1 items-center hover:underline font-semibold text-sm text-black/80 text-black mb-3"
