@@ -313,7 +313,7 @@ export default function CategoryType({ params }: CategoryTypeProps) {
         </Link>
         <h1 className="text-xl md:text-2xl">
           Showing results for:{" "}
-          <span className="font-bold">"{params.slug}"</span>
+          <span className="font-bold">&quot;{params.slug}&quot;</span>
         </h1>
         <section className="py-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
