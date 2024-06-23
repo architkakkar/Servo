@@ -103,7 +103,7 @@ export default function Navbar({ className }: NavbarProps) {
             {showLocationDropdown && (
               <>
                 <div className="fixed inset-0 h-screen w-full bg-white/75 z-[50]" />
-                <div className="absolute top-[4.75rem] right-5 min-w-[17.5rem] h-80 bg-white transition-all rounded-xl z-[100] shadow-profile">
+                <div className="absolute top-[4.75rem] right-5 min-w-[17.5rem] h-80 bg-white transition-all rounded-xl z-[100] shadow-profile md:right-48 md:top-20">
                   {/* Location change logic and UI goes here. */}
                 </div>
               </>
